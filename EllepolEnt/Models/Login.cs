@@ -7,7 +7,7 @@ public class Login
 {
 
     [Key]
-    public String UserID { get; set; }
+    public int UserID { get; set; }
 
     public String UserName { get; set; }
 
