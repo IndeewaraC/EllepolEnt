@@ -22,18 +22,18 @@ namespace EllepolEnt.Controllers
         // GET: Login
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Logins.ToListAsync());
+              return View(await _context.Login.ToListAsync());
         }
 
         // GET: Login/Details/5
         public async Task<IActionResult> Details(string id)
         {
-            if (id == null || _context.Logins == null)
+            if (id == null || _context.Login == null)
             {
                 return NotFound();
             }
 
-            var login = await _context.Logins
+            var login = await _context.Login
                 .FirstOrDefaultAsync(m => m.UserID == id);
             if (login == null)
             {
@@ -54,7 +54,7 @@ namespace EllepolEnt.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserID,UserName,Password")] dbLogin login)
+        public async Task<IActionResult> Create([Bind("UserID,UserName,Password")] Login login)
         {
             if (ModelState.IsValid)
             {
@@ -68,12 +68,12 @@ namespace EllepolEnt.Controllers
         // GET: Login/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
-            if (id == null || _context.Logins == null)
+            if (id == null || _context.Login == null)
             {
                 return NotFound();
             }
 
-            var login = await _context.Logins.FindAsync(id);
+            var login = await _context.Login.FindAsync(id);
             if (login == null)
             {
                 return NotFound();
@@ -86,7 +86,7 @@ namespace EllepolEnt.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("UserID,UserName,Password")] dbLogin login)
+        public async Task<IActionResult> Edit(string id, [Bind("UserID,UserName,Password")] Login login)
         {
             if (id != login.UserID)
             {
@@ -119,12 +119,12 @@ namespace EllepolEnt.Controllers
         // GET: Login/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
-            if (id == null || _context.Logins == null)
+            if (id == null || _context.Login == null)
             {
                 return NotFound();
             }
 
-            var login = await _context.Logins
+            var login = await _context.Login
                 .FirstOrDefaultAsync(m => m.UserID == id);
             if (login == null)
             {
@@ -139,14 +139,14 @@ namespace EllepolEnt.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            if (_context.Logins == null)
+            if (_context.Login == null)
             {
-                return Problem("Entity set 'EllepolEntContext.Logins'  is null.");
+                return Problem("Entity set 'EllepolEntContext.Login'  is null.");
             }
-            var login = await _context.Logins.FindAsync(id);
+            var login = await _context.Login.FindAsync(id);
             if (login != null)
             {
-                _context.Logins.Remove(login);
+                _context.Login.Remove(login);
             }
             
             await _context.SaveChangesAsync();
@@ -155,7 +155,7 @@ namespace EllepolEnt.Controllers
 
         private bool LoginExists(string id)
         {
-          return _context.Logins.Any(e => e.UserID == id);
+          return _context.Login.Any(e => e.UserID == id);
         }
     }
 }

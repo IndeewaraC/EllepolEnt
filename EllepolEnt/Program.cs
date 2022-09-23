@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using EllepolEnt.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<EllepolEntContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("EllepolEntContext") ?? throw new InvalidOperationException("Connection string 'EllepolEntContext' not found.")));
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
