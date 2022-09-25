@@ -9,8 +9,6 @@ public class userdetail
     [Key]
     public int UserId { get; set; }
     public string Name { get; set; }
-
     public string NIC { get; set; }
-
     public int RoleID { get; set; }
 }
