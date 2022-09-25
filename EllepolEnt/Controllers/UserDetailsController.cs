@@ -48,9 +48,9 @@ namespace EllepolEnt.Controllers
         {
 
             List<SelectListItem> rolelist = new();
-            List<string> roleid = _context.Role.Select(x => x.RoleName).ToList();
-            roleid.ForEach(x => rolelist.Add(new() { Value = x.ToString(), Text = x.ToString() }));
-            ViewBag.listofuserids = rolelist;
+            List<Role> roleid = _context.Role.ToList();
+            roleid.ForEach (x => rolelist.Add(new() { Value = x.RoleId.ToString(), Text = x.RoleName.ToString() })) ;
+            ViewBag.listofrole = rolelist;
             return View();
         }
 
