@@ -7,18 +7,27 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EllepolEnt.Data;
 using EllepolEnt.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace EllepolEnt.Controllers
 {
     public class LoginController : Controller
     {
-        
-        private readonly EllepolEntContext _context;
 
-        public LoginController(EllepolEntContext context)
+        private readonly EllepolEntContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
+
+
+        public LoginController(EllepolEntContext context, UserManager<IdentityUser> userManager,
+                              SignInManager<IdentityUser> signInManager)
         {
             _context = context;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
+
 
         // GET: Login
         public async Task<IActionResult> Index()
@@ -137,6 +146,7 @@ namespace EllepolEnt.Controllers
             }
 
             return View(login);
+
         }
 
         // POST: Login/Delete/5
@@ -153,14 +163,38 @@ namespace EllepolEnt.Controllers
             {
                 _context.Login.Remove(login);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult LoginUser()
+        {
+            return View();
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> LoginUser(Login LgDetail)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _signInManager.PasswordSignInAsync(LgDetail.UserName, LgDetail.Password,LgDetail.RememberMe, false);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
+                ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
+
+            }
+            return View(LgDetail);
         }
 
         private bool LoginExists(int id)
         {
           return _context.Login.Any(e => e.UserID == id);
         }
+
     }
 }

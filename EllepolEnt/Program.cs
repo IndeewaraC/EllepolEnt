@@ -1,6 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using EllepolEnt.Data;
+using Microsoft.AspNetCore.Identity;
+
+
 
 
 var builder = WebApplication.CreateBuilder(args);
