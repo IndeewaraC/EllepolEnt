@@ -46,6 +46,11 @@ namespace EllepolEnt.Controllers
         // GET: UserDetails/Create
         public IActionResult Create()
         {
+
+            List<SelectListItem> rolelist = new();
+            List<string> roleid = _context.Role.Select(x => x.RoleName).ToList();
+            roleid.ForEach(x => rolelist.Add(new() { Value = x.ToString(), Text = x.ToString() }));
+            ViewBag.listofuserids = rolelist;
             return View();
         }
 
