@@ -16,6 +16,6 @@ namespace EllepolEnt.Data
 
         public DbSet<EllepolEnt.Models.Login> Login { get; set; } = default!;
 
-        public DbSet<EllepolEnt.Models.userdetail> userdetail { get; set; }
+        public DbSet<EllepolEnt.Models.UserDetails> UserDetails { get; set; }
     }
 }

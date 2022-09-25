@@ -1,10 +1,8 @@
-﻿using MessagePack;
-using System.ComponentModel.DataAnnotations;
-using KeyAttribute = System.ComponentModel.DataAnnotations.KeyAttribute;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace EllepolEnt.Models;
 
-public class userdetail
+public class UserDetails
 {
     [Key]
     public int UserId { get; set; }

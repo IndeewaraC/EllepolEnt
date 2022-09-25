@@ -12,6 +12,7 @@ namespace EllepolEnt.Controllers
 {
     public class LoginController : Controller
     {
+        
         private readonly EllepolEntContext _context;
 
         public LoginController(EllepolEntContext context)
@@ -46,6 +47,10 @@ namespace EllepolEnt.Controllers
         // GET: Login/Create
         public IActionResult Create()
         {
+            List<SelectListItem> useridlist = new();
+            List<int> userid = _context.UserDetails.Select(x => x.UserId).ToList();
+            userid.ForEach (x => useridlist.Add(new() { Value = x.ToString(), Text = x.ToString() })) ;
+            ViewBag.listofuserids = useridlist;
             return View();
         }
 

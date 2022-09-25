@@ -10,85 +10,85 @@ using EllepolEnt.Models;
 
 namespace EllepolEnt.Controllers
 {
-    public class userdetailController : Controller
+    public class UserDetailsController : Controller
     {
         private readonly EllepolEntContext _context;
 
-        public userdetailController(EllepolEntContext context)
+        public UserDetailsController(EllepolEntContext context)
         {
             _context = context;
         }
 
-        // GET: userdetail
+        // GET: UserDetails
         public async Task<IActionResult> Index()
         {
-              return View(await _context.userdetail.ToListAsync());
+              return View(await _context.UserDetails.ToListAsync());
         }
 
-        // GET: userdetail/Details/5
+        // GET: UserDetails/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.userdetail == null)
+            if (id == null || _context.UserDetails == null)
             {
                 return NotFound();
             }
 
-            var userdetail = await _context.userdetail
+            var userDetails = await _context.UserDetails
                 .FirstOrDefaultAsync(m => m.UserId == id);
-            if (userdetail == null)
+            if (userDetails == null)
             {
                 return NotFound();
             }
 
-            return View(userdetail);
+            return View(userDetails);
         }
 
-        // GET: userdetail/Create
+        // GET: UserDetails/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: userdetail/Create
+        // POST: UserDetails/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserId,Name,NIC,RoleID")] userdetail userdetail)
+        public async Task<IActionResult> Create([Bind("UserId,Name,NIC,RoleID")] UserDetails userDetails)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(userdetail);
+                _context.Add(userDetails);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(userdetail);
+            return View(userDetails);
         }
 
-        // GET: userdetail/Edit/5
+        // GET: UserDetails/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.userdetail == null)
+            if (id == null || _context.UserDetails == null)
             {
                 return NotFound();
             }
 
-            var userdetail = await _context.userdetail.FindAsync(id);
-            if (userdetail == null)
+            var userDetails = await _context.UserDetails.FindAsync(id);
+            if (userDetails == null)
             {
                 return NotFound();
             }
-            return View(userdetail);
+            return View(userDetails);
         }
 
-        // POST: userdetail/Edit/5
+        // POST: UserDetails/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UserId,Name,NIC,RoleID")] userdetail userdetail)
+        public async Task<IActionResult> Edit(int id, [Bind("UserId,Name,NIC,RoleID")] UserDetails userDetails)
         {
-            if (id != userdetail.UserId)
+            if (id != userDetails.UserId)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace EllepolEnt.Controllers
             {
                 try
                 {
-                    _context.Update(userdetail);
+                    _context.Update(userDetails);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!userdetailExists(userdetail.UserId))
+                    if (!UserDetailsExists(userDetails.UserId))
                     {
                         return NotFound();
                     }
@@ -113,49 +113,49 @@ namespace EllepolEnt.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(userdetail);
+            return View(userDetails);
         }
 
-        // GET: userdetail/Delete/5
+        // GET: UserDetails/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.userdetail == null)
+            if (id == null || _context.UserDetails == null)
             {
                 return NotFound();
             }
 
-            var userdetail = await _context.userdetail
+            var userDetails = await _context.UserDetails
                 .FirstOrDefaultAsync(m => m.UserId == id);
-            if (userdetail == null)
+            if (userDetails == null)
             {
                 return NotFound();
             }
 
-            return View(userdetail);
+            return View(userDetails);
         }
 
-        // POST: userdetail/Delete/5
+        // POST: UserDetails/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.userdetail == null)
+            if (_context.UserDetails == null)
             {
-                return Problem("Entity set 'EllepolEntContext.userdetail'  is null.");
+                return Problem("Entity set 'EllepolEntContext.UserDetails'  is null.");
             }
-            var userdetail = await _context.userdetail.FindAsync(id);
-            if (userdetail != null)
+            var userDetails = await _context.UserDetails.FindAsync(id);
+            if (userDetails != null)
             {
-                _context.userdetail.Remove(userdetail);
+                _context.UserDetails.Remove(userDetails);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool userdetailExists(int id)
+        private bool UserDetailsExists(int id)
         {
-          return _context.userdetail.Any(e => e.UserId == id);
+          return _context.UserDetails.Any(e => e.UserId == id);
         }
     }
 }
