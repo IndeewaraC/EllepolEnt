@@ -9,6 +9,8 @@ using EllepolEnt.Data;
 using EllepolEnt.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace EllepolEnt.Controllers
 {
@@ -167,33 +169,72 @@ namespace EllepolEnt.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-        [HttpGet]
-        [AllowAnonymous]
-        public IActionResult LoginUser()
+        //[HttpGet]
+        //[AllowAnonymous]
+        //public IActionResult LoginUser()
+        //{
+        //    return View();
+        //}
+        //[HttpPost]
+        //[AllowAnonymous]
+        //public async Task<IActionResult> LoginUser(Login LgDetail)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var result = await _signInManager.PasswordSignInAsync(LgDetail.UserName, LgDetail.Password,LgDetail.RememberMe, false);
+        //        if (result.Succeeded)
+        //        {
+        //            return RedirectToAction("Index", "Home");
+        //        }
+
+        //        ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
+
+        //    }
+        //    return View(LgDetail);
+        //}
+        public ActionResult LoginUser()
         {
             return View();
         }
         [HttpPost]
-        [AllowAnonymous]
-        public async Task<IActionResult> LoginUser(Login LgDetail)
+        [ValidateAntiForgeryToken]
+        public ActionResult LoginUser(string email, string password)
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(LgDetail.UserName, LgDetail.Password,LgDetail.RememberMe, false);
-                if (result.Succeeded)
+                var f_password = GetMD5(password);
+                var data = _context.Login.Where(s => s.UserName.Equals(email) && s.Password.Equals(f_password)).ToList();
+                if (data.Count() > 0)
                 {
-                    return RedirectToAction("Index", "Home");
+          
+                    return RedirectToAction("Index");
                 }
-
-                ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
-
+                else
+                {
+                    ViewBag.error = "Login failed";
+                    return RedirectToAction("Login");
+                }
             }
-            return View(LgDetail);
+            return View();
         }
-
         private bool LoginExists(int id)
         {
           return _context.Login.Any(e => e.UserID == id);
+        }
+
+        public static string GetMD5(string str)
+        {
+            MD5 md5 = new MD5CryptoServiceProvider();
+            byte[] fromData = Encoding.UTF8.GetBytes(str);
+            byte[] targetData = md5.ComputeHash(fromData);
+            string byte2String = null;
+
+            for (int i = 0; i < targetData.Length; i++)
+            {
+                byte2String += targetData[i].ToString("x2");
+
+            }
+            return byte2String;
         }
 
     }
