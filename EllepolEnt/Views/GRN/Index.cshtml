@@ -1,0 +1,53 @@
+﻿@model IEnumerable<EllepolEnt.Models.GRN>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.GRN_Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Item_ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.In_Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Stock_In_Amount)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.GRN_Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Item_ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.In_Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stock_In_Amount)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.GRN_ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.GRN_ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.GRN_ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

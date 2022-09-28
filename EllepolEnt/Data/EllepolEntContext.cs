@@ -19,5 +19,11 @@ namespace EllepolEnt.Data
         public DbSet<EllepolEnt.Models.UserDetails> UserDetails { get; set; }
 
         public DbSet<EllepolEnt.Models.Role> Role { get; set; }
+
+        public DbSet<EllepolEnt.Models.GRN> GRN { get; set; }
+
+        public DbSet<EllepolEnt.Models.ItemReg> ItemReg { get; set; }
+
+        public DbSet<EllepolEnt.Models.Stock> Stock { get; set; }
     }
 }
