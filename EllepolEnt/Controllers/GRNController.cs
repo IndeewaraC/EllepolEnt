@@ -22,7 +22,26 @@ namespace EllepolEnt.Controllers
         // GET: GRN
         public async Task<IActionResult> Index()
         {
-              return View(await _context.GRN.ToListAsync());
+            var loginsession = HttpContext.Session.GetString("Uname");
+            var rolesession = HttpContext.Session.GetString("Role");
+            if (loginsession != null && loginsession != "")
+            {
+                if (rolesession != null && rolesession != "" && (rolesession == "Admin"))
+                {
+                    return View(await _context.GRN.ToListAsync());
+                }
+                else 
+                {
+                    return RedirectToAction("AccessDinied", "Login");
+                }
+            }
+            else 
+            {
+                return RedirectToAction("LoginUser", "Login");
+            }
+            
+
+
         }
 
         // GET: GRN/Details/5

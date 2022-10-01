@@ -175,6 +175,11 @@ namespace EllepolEnt.Controllers
         {
             return View();
         }
+        public ActionResult AccessDinied()
+        {
+            return View();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LoginUser(string UserName, string password)
@@ -182,12 +187,14 @@ namespace EllepolEnt.Controllers
             if (ModelState.IsValid)
             {
                 //var f_password = GetMD5(password);
-                var data = _context.Login.Where(s => s.UserName.Equals(UserName) && s.Password.Equals(password)).ToList();
-                if (data.Count() > 0)
-                {
-                    HttpContext.Session.SetString("Uname",UserName);
+                var data = _context.Login.FirstOrDefault(s => s.UserName.Equals(UserName) && s.Password.Equals(password));
 
-                    var sex = HttpContext.Session.GetString("Uname");
+                if (data != null)
+                {
+                    var userRoleid = _context.UserDetails.FirstOrDefault(s => s.UserId.Equals(data.UserID)).RoleID;
+                    var userRolename = _context.Role.FirstOrDefault(s => s.RoleId.Equals(userRoleid)).RoleName;
+                    HttpContext.Session.SetString("Uname",UserName);
+                    HttpContext.Session.SetString("Role", userRolename);
                     return RedirectToAction("Index");
                 }
                 else
