@@ -179,6 +179,11 @@ namespace EllepolEnt.Controllers
         {
             return View();
         }
+        public ActionResult LogoutUser()
+        {
+            HttpContext.Session.Remove("options");
+            return RedirectToAction("Index");
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
