@@ -67,8 +67,25 @@ namespace EllepolEnt.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    _context.Add(gRN);
+                    _context.GRN.Add(gRN);
                     await _context.SaveChangesAsync();
+
+                    var stockrecord = _context.Stock.FirstOrDefault(e=> e.Itemid== itemid);
+                    if (stockrecord != null)
+                    {
+                        stockrecord.Available_Stock += Stock_In_Amount;
+                    }
+                    else
+                    {
+                        var stockrecord2 = new Stock();
+                        stockrecord2.Itemid = itemid;
+                        stockrecord2.Available_Stock = Stock_In_Amount;
+
+                        _context.Stock.Add(stockrecord2);
+                        
+                    }
+                    await _context.SaveChangesAsync();
+
                     return RedirectToAction(nameof(Index));
                 }
             }

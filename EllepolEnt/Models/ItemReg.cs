@@ -12,4 +12,6 @@ public class ItemReg
     [Required]
     public float Saleprice { get; set; }
 
+    //public List<GRN> gRNs { get; set; }
+
 }

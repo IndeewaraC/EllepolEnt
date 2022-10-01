@@ -1,0 +1,26 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@inject IHttpContextAccessor Accessor
+
+
+
+<ul class="navbar-nav">
+    
+    @if (Accessor.HttpContext.Session.GetString("Uname") == "" || Accessor.HttpContext.Session.GetString("Uname") == null)
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="UserDetails" asp-action="Create">Register</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="LoginUser">Login</a>
+        </li>
+    }
+    else
+    {
+        @Accessor.HttpContext.Session.GetString("Uname").ToString();
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="LoginUser">Login</a>
+        </li>
+    }
+</ul>

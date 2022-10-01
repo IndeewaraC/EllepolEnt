@@ -13,6 +13,5 @@ public class Login
 
     public String Password { get; set; }
 
-    public bool RememberMe { get; set; }
 
 }

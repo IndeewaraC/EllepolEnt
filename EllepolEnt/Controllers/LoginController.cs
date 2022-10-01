@@ -40,6 +40,8 @@ namespace EllepolEnt.Controllers
         // GET: Login/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+
+            var sex = HttpContext.Session.GetString("Uname");
             if (id == null || _context.Login == null)
             {
                 return NotFound();
@@ -169,44 +171,23 @@ namespace EllepolEnt.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-        //[HttpGet]
-        //[AllowAnonymous]
-        //public IActionResult LoginUser()
-        //{
-        //    return View();
-        //}
-        //[HttpPost]
-        //[AllowAnonymous]
-        //public async Task<IActionResult> LoginUser(Login LgDetail)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var result = await _signInManager.PasswordSignInAsync(LgDetail.UserName, LgDetail.Password,LgDetail.RememberMe, false);
-        //        if (result.Succeeded)
-        //        {
-        //            return RedirectToAction("Index", "Home");
-        //        }
-
-        //        ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
-
-        //    }
-        //    return View(LgDetail);
-        //}
         public ActionResult LoginUser()
         {
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult LoginUser(string email, string password)
+        public ActionResult LoginUser(string UserName, string password)
         {
             if (ModelState.IsValid)
             {
-                var f_password = GetMD5(password);
-                var data = _context.Login.Where(s => s.UserName.Equals(email) && s.Password.Equals(f_password)).ToList();
+                //var f_password = GetMD5(password);
+                var data = _context.Login.Where(s => s.UserName.Equals(UserName) && s.Password.Equals(password)).ToList();
                 if (data.Count() > 0)
                 {
-          
+                    HttpContext.Session.SetString("Uname",UserName);
+
+                    var sex = HttpContext.Session.GetString("Uname");
                     return RedirectToAction("Index");
                 }
                 else
@@ -222,20 +203,20 @@ namespace EllepolEnt.Controllers
           return _context.Login.Any(e => e.UserID == id);
         }
 
-        public static string GetMD5(string str)
-        {
-            MD5 md5 = new MD5CryptoServiceProvider();
-            byte[] fromData = Encoding.UTF8.GetBytes(str);
-            byte[] targetData = md5.ComputeHash(fromData);
-            string byte2String = null;
+        //public static string GetMD5(string str)
+        //{
+        //    MD5 md5 = new MD5CryptoServiceProvider();
+        //    byte[] fromData = Encoding.UTF8.GetBytes(str);
+        //    byte[] targetData = md5.ComputeHash(fromData);
+        //    string byte2String = null;
 
-            for (int i = 0; i < targetData.Length; i++)
-            {
-                byte2String += targetData[i].ToString("x2");
+        //    for (int i = 0; i < targetData.Length; i++)
+        //    {
+        //        byte2String += targetData[i].ToString("x2");
 
-            }
-            return byte2String;
-        }
+        //    }
+        //    return byte2String;
+        //}
 
     }
 }
