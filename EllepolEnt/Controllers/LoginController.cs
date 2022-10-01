@@ -186,7 +186,6 @@ namespace EllepolEnt.Controllers
         {
             if (ModelState.IsValid)
             {
-                //var f_password = GetMD5(password);
                 var data = _context.Login.FirstOrDefault(s => s.UserName.Equals(UserName) && s.Password.Equals(password));
 
                 if (data != null)
