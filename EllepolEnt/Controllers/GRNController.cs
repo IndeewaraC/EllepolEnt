@@ -32,7 +32,7 @@ namespace EllepolEnt.Controllers
                 }
                 else 
                 {
-                    return RedirectToAction("AccessDinied", "Login");
+                    return RedirectToAction("AccessDinied", "Home");
                 }
             }
             else 

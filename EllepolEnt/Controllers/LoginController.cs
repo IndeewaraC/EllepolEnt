@@ -34,7 +34,7 @@ namespace EllepolEnt.Controllers
         // GET: Login
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Login.ToListAsync());
+            return View(await _context.Login.ToListAsync());
         }
 
         // GET: Login/Details/5
@@ -182,7 +182,7 @@ namespace EllepolEnt.Controllers
         public ActionResult LogoutUser()
         {
             HttpContext.Session.Remove("options");
-            return RedirectToAction("Index");
+            return RedirectToAction("LoginUser");
         }
 
         [HttpPost]
@@ -199,12 +199,12 @@ namespace EllepolEnt.Controllers
                     var userRolename = _context.Role.FirstOrDefault(s => s.RoleId.Equals(userRoleid)).RoleName;
                     HttpContext.Session.SetString("Uname",UserName);
                     HttpContext.Session.SetString("Role", userRolename);
-                    return RedirectToAction("Index");
+                    return Redirect("/Home/Index");
                 }
                 else
                 {
-                    ViewBag.error = "Login failed";
-                    return RedirectToAction("Login");
+                    ViewBag.error = "Login Failed";
+                    return Redirect("/Home/CredentialFail");
                 }
             }
             return View();
@@ -213,21 +213,6 @@ namespace EllepolEnt.Controllers
         {
           return _context.Login.Any(e => e.UserID == id);
         }
-
-        //public static string GetMD5(string str)
-        //{
-        //    MD5 md5 = new MD5CryptoServiceProvider();
-        //    byte[] fromData = Encoding.UTF8.GetBytes(str);
-        //    byte[] targetData = md5.ComputeHash(fromData);
-        //    string byte2String = null;
-
-        //    for (int i = 0; i < targetData.Length; i++)
-        //    {
-        //        byte2String += targetData[i].ToString("x2");
-
-        //    }
-        //    return byte2String;
-        //}
 
     }
 }

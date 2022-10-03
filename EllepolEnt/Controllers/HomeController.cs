@@ -23,6 +23,15 @@ namespace EllepolEnt.Controllers
             return View();
         }
 
+        public IActionResult AccessDinied()
+        {
+            return View();
+        }
+        public IActionResult CredentialFail()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
