@@ -25,5 +25,13 @@ namespace EllepolEnt.Data
         public DbSet<EllepolEnt.Models.ItemReg> ItemReg { get; set; }
 
         public DbSet<EllepolEnt.Models.Stock> Stock { get; set; }
+
+        public DbSet<EllepolEnt.Models.Invoice> Invoice { get; set; }
+
+        public DbSet<EllepolEnt.Models.Pumpregistration> Pumpregistration { get; set; }
+
+        public DbSet<EllepolEnt.Models.PumpManagement> PumpManagement { get; set; }
+
+        public DbSet<EllepolEnt.Models.StockOut> StockOut { get; set; }
     }
 }
