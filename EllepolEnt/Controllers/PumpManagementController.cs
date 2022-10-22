@@ -79,6 +79,9 @@ namespace EllepolEnt.Controllers
         {
             var itemid = pumpManagement.ItemID;
             double ltrs = pumpManagement.Ltrs;
+            DateTime dateoutst = pumpManagement.Date;
+            var stoutprice = pumpManagement.cash_In;
+
             if (!String.IsNullOrEmpty(itemid))
             {
 
@@ -86,15 +89,17 @@ namespace EllepolEnt.Controllers
                 {
                     _context.Add(pumpManagement);
                     await _context.SaveChangesAsync();
-
-
                     var StockRecord = _context.Stock.FirstOrDefault(e => e.Itemid == itemid);
+
                     if (StockRecord != null)
                     {
                         var Current_Stock = StockRecord.Available_Stock; 
                         if (Current_Stock >= ltrs)
                         {
                             StockRecord.Available_Stock -= Convert.ToInt32(ltrs);
+                            Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Stock_Out> entityEntry = _context.Stock_Out.Add(dateoutst, itemid,);
+
+
                         }
                         
                     }
