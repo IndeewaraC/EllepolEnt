@@ -46,8 +46,29 @@ namespace EllepolEnt.Controllers
         // GET: PumpManagement/Create
         public IActionResult Create()
         {
+            List<SelectListItem> ItemIdList = new();
+            List<ItemReg> ItemId = _context.ItemReg.ToList();
+            ItemId.ForEach(x => ItemIdList.Add(new() { Value = x.itemid.ToString(), Text = x.itemname.ToString() }));
+            ViewBag.listofItemId = ItemIdList;
+
+            List<SelectListItem> PumpIDlist = new();
+            List<Pumpregistration> pumpid = _context.Pumpregistration.ToList();
+            pumpid.ForEach(x => PumpIDlist.Add(new() { Value = x.PumpID.ToString(), Text = x.pumpname.ToString() }));
+            ViewBag.listofPumpIds = PumpIDlist;
+
+            List<SelectListItem> useridlist = new();
+            List<UserDetails> userid = _context.UserDetails.ToList();
+            userid.ForEach(x => useridlist.Add(new() { Value = x.UserId.ToString(), Text = x.Name.ToString() }));
+            ViewBag.listofuserids = useridlist;
+
+            List<SelectListItem> grnidlist = new();
+            List<GRN> grnid = _context.GRN.ToList();
+            grnid.ForEach(x => grnidlist.Add(new() { Value = x.GRN_ID.ToString(), Text = x.GRN_ID.ToString() }));
+            ViewBag.listofGrn = grnidlist;
+
             return View();
         }
+
 
         // POST: PumpManagement/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.

@@ -13,40 +13,37 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="ItemID" class="control-label"></label>
-                <input asp-for="ItemID" class="form-control" />
-                <span asp-validation-for="ItemID" class="text-danger"></span>
+                <label asp-for="ItemID" class="control-label">Item Id</label>
+                <select name="ItemID" class="form-control" asp-items="@ViewBag.listofItemId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="UserID" class="control-label"></label>
-                <input asp-for="UserID" class="form-control" />
-                <span asp-validation-for="UserID" class="text-danger"></span>
+                <label asp-for="UserID" class="control-label">User ID</label>
+                <select name="UserID" class="form-control" asp-items="@ViewBag.listofuserids"></select>
             </div>
             <div class="form-group">
-                <label asp-for="pumpID" class="control-label"></label>
-                <input asp-for="pumpID" class="form-control" />
-                <span asp-validation-for="pumpID" class="text-danger"></span>
+                <label asp-for="pumpID" class="control-label">Pump Id</label>
+                <select name="PumpID" class="form-control" asp-items="@ViewBag.listofPumpIds"></select>
             </div>
             <div class="form-group">
-                <label asp-for="GRNID" class="control-label"></label>
-                <input asp-for="GRNID" class="form-control" />
-                <span asp-validation-for="GRNID" class="text-danger"></span>
+                <label asp-for="GRNID" class="control-label">Grn Id</label>
+                <select name="GRNID" class="form-control" asp-items="@ViewBag.listofGrn"></select>
             </div>
             <div class="form-group">
-                <label asp-for="Date" class="control-label"></label>
+                <label asp-for="Date" class="control-label">Date</label>
                 <input asp-for="Date" class="form-control" />
                 <span asp-validation-for="Date" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="cashIn" class="control-label"></label>
+                <label asp-for="cashIn" class="control-label">Cash In</label>
                 <input asp-for="cashIn" class="form-control" />
                 <span asp-validation-for="cashIn" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Ltrs" class="control-label"></label>
+                <label asp-for="Ltrs" class="control-label">Liters</label>
                 <input asp-for="Ltrs" class="form-control" />
                 <span asp-validation-for="Ltrs" class="text-danger"></span>
             </div>
+            <br>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
