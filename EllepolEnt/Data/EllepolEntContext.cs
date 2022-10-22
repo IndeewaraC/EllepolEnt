@@ -32,5 +32,7 @@ namespace EllepolEnt.Data
 
         public DbSet<EllepolEnt.Models.PumpManagement> PumpManagement { get; set; }
 
+
+
     }
 }
