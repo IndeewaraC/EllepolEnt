@@ -75,13 +75,41 @@ namespace EllepolEnt.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ItemID,UserID,pumpID,GRNID,Date,cashIn,Ltrs")] PumpManagement pumpManagement)
+        public async Task<IActionResult> Create([Bind("ItemID,UserID,pumpID,GRN_ID,Date,cash_In,Ltrs")] PumpManagement pumpManagement)
         {
-            if (ModelState.IsValid)
+            var itemid = pumpManagement.ItemID;
+            double ltrs = pumpManagement.Ltrs;
+            if (!String.IsNullOrEmpty(itemid))
             {
-                _context.Add(pumpManagement);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                if (ModelState.IsValid)
+                {
+                    _context.Add(pumpManagement);
+                    await _context.SaveChangesAsync();
+
+
+                    var StockRecord = _context.Stock.FirstOrDefault(e => e.Itemid == itemid);
+                    if (StockRecord != null)
+                    {
+                        var Current_Stock = StockRecord.Available_Stock; 
+                        if (Current_Stock >= ltrs)
+                        {
+                            StockRecord.Available_Stock -= Convert.ToInt32(ltrs);
+                        }
+                        
+                    }
+                    else
+                    {
+                        var stockrecord2 = new Stock();
+                        stockrecord2.Itemid = itemid;
+                        stockrecord2.Available_Stock = Convert.ToInt32(ltrs);
+                        _context.Stock.Add(stockrecord2);
+
+                    }
+                    await _context.SaveChangesAsync();
+
+                    return RedirectToAction(nameof(Index));
+                }
             }
             return View(pumpManagement);
         }

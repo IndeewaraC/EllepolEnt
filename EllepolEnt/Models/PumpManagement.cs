@@ -13,12 +13,12 @@ public class PumpManagement
     [Required]
     public string pumpID { get; set; }
     [Required]
-    public string GRNID { get; set; }
+    public string GRN_ID { get; set; }
     [Required]
     [BindProperty, DataType(DataType.Date)]
     public DateTime Date { get; set; }
     [Required]
-    public float cashIn { get; set; }
+    public float cash_In { get; set; }
     [Required]
     public float Ltrs { get; set; }
 

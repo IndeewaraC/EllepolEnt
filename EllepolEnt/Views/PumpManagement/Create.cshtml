@@ -25,8 +25,8 @@
                 <select name="PumpID" class="form-control" asp-items="@ViewBag.listofPumpIds"></select>
             </div>
             <div class="form-group">
-                <label asp-for="GRNID" class="control-label">Grn Id</label>
-                <select name="GRNID" class="form-control" asp-items="@ViewBag.listofGrn"></select>
+                <label asp-for="GRN_ID" class="control-label">Grn Id</label>
+                <select name="GRN_ID" class="form-control" asp-items="@ViewBag.listofGrn"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Date" class="control-label">Date</label>
@@ -34,9 +34,9 @@
                 <span asp-validation-for="Date" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="cashIn" class="control-label">Cash In</label>
-                <input asp-for="cashIn" class="form-control" />
-                <span asp-validation-for="cashIn" class="text-danger"></span>
+                <label asp-for="cash_In" class="control-label">Cash In</label>
+                <input asp-for="cash_In" class="form-control" />
+                <span asp-validation-for="cash_In" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Ltrs" class="control-label">Liters</label>

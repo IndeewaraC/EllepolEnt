@@ -32,6 +32,5 @@ namespace EllepolEnt.Data
 
         public DbSet<EllepolEnt.Models.PumpManagement> PumpManagement { get; set; }
 
-        public DbSet<EllepolEnt.Models.StockOut> StockOut { get; set; }
     }
 }
