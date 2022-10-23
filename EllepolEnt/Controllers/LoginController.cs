@@ -40,11 +40,10 @@ namespace EllepolEnt.Controllers
         // GET: Login/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-
-            var sex = HttpContext.Session.GetString("Uname");
             if (id == null || _context.Login == null)
             {
                 return NotFound();
+
             }
 
             var login = await _context.Login
@@ -53,18 +52,37 @@ namespace EllepolEnt.Controllers
             {
                 return NotFound();
             }
-
             return View(login);
+
+
         }
 
         // GET: Login/Create
         public IActionResult Create()
         {
-            List<SelectListItem> useridlist = new();
-            List<UserDetails> userid = _context.UserDetails.ToList();
-            userid.ForEach (x => useridlist.Add(new() { Value = x.UserId.ToString(), Text = x.Name.ToString() })) ;
-            ViewBag.listofuserids = useridlist;
-            return View();
+            var loginsession = HttpContext.Session.GetString("Uname");
+            var rolesession = HttpContext.Session.GetString("Role");
+            if (loginsession != null && loginsession != "")
+            {
+                if (rolesession != null && rolesession != "" && (rolesession == "Admin"))
+                {
+                    List<SelectListItem> useridlist = new();
+                    List<UserDetails> userid = _context.UserDetails.ToList();
+                    userid.ForEach(x => useridlist.Add(new() { Value = x.UserId.ToString(), Text = x.Name.ToString() }));
+                    ViewBag.listofuserids = useridlist;
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("AccessDinied", "Home");
+                }
+            }
+            else
+            {
+                return RedirectToAction("LoginUser", "Login");
+            }
+
+            
         }
 
         // POST: Login/Create

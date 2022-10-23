@@ -46,12 +46,27 @@ namespace EllepolEnt.Controllers
         // GET: UserDetails/Create
         public IActionResult Create()
         {
-
-            List<SelectListItem> rolelist = new();
-            List<Role> roleid = _context.Role.ToList();
-            roleid.ForEach (x => rolelist.Add(new() { Value = x.RoleId.ToString(), Text = x.RoleName.ToString() })) ;
-            ViewBag.listofrole = rolelist;
-            return View();
+            var loginsession = HttpContext.Session.GetString("Uname");
+            var rolesession = HttpContext.Session.GetString("Role");
+            if (loginsession != null && loginsession != "")
+            {
+                if (rolesession != null && rolesession != "" && (rolesession == "Admin"))
+                {
+                    List<SelectListItem> rolelist = new();
+                    List<Role> roleid = _context.Role.ToList();
+                    roleid.ForEach(x => rolelist.Add(new() { Value = x.RoleId.ToString(), Text = x.RoleName.ToString() }));
+                    ViewBag.listofrole = rolelist;
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("AccessDinied", "Home");
+                }
+            }
+            else
+            {
+                return RedirectToAction("LoginUser", "Login");
+            }
         }
 
         // POST: UserDetails/Create
