@@ -87,8 +87,6 @@ namespace EllepolEnt.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    _context.Add(pumpManagement);
-                    await _context.SaveChangesAsync();
                     var StockRecord = _context.Stock.FirstOrDefault(e => e.Itemid == itemid);
 
                     if (StockRecord != null)
@@ -97,23 +95,20 @@ namespace EllepolEnt.Controllers
                         if (Current_Stock >= ltrs)
                         {
                             StockRecord.Available_Stock -= Convert.ToInt32(ltrs);
-                            Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Stock_Out> entityEntry = _context.Stock_Out.Add(dateoutst, itemid,);
+                            _context.Add(pumpManagement);
 
-
+                            var stockoutRecord = new Stock_Out();
+                            stockoutRecord.stockoutDate = dateoutst;
+                            stockoutRecord.ItemId = itemid;
+                            stockoutRecord.Stockout = float.Parse(ltrs.ToString());
+                            stockoutRecord.StockoutPrice = stoutprice;
+                            _context.Stock_Out.Add(stockoutRecord);
+                            await _context.SaveChangesAsync();
                         }
                         
                     }
-                    else
-                    {
-                        var stockrecord2 = new Stock();
-                        stockrecord2.Itemid = itemid;
-                        stockrecord2.Available_Stock = Convert.ToInt32(ltrs);
-                        _context.Stock.Add(stockrecord2);
 
-                    }
-                    await _context.SaveChangesAsync();
-
-                    return RedirectToAction(nameof(Index));
+                   return RedirectToAction(nameof(Index));
                 }
             }
             return View(pumpManagement);
