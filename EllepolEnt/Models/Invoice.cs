@@ -6,15 +6,13 @@ public class Invoice
 {
     [Key]
     [Required]
-    public string InvoiceNumber { get; set; }
+    public string Invoice_Number { get; set; }
     [Required]
     public string Item_Id { get; set; }
     [Required]
-    public string ItemName { get; set; }
+    public string Item_Name { get; set; }
     [Required]
-    public float ItemPrice { get; set; }
-    [Required]
-    public float DiscountRate { get; set; }
+    public float Item_Price { get; set; }
     [Required]
     public float qty { get; set; }
 

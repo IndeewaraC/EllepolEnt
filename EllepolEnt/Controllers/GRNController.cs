@@ -39,8 +39,6 @@ namespace EllepolEnt.Controllers
             {
                 return RedirectToAction("LoginUser", "Login");
             }
-            
-
 
         }
 
@@ -99,7 +97,6 @@ namespace EllepolEnt.Controllers
                         var stockrecord2 = new Stock();
                         stockrecord2.Itemid = itemid;
                         stockrecord2.Available_Stock = Stock_In_Amount;
-
                         _context.Stock.Add(stockrecord2);
                         
                     }

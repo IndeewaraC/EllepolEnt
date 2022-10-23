@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EllepolEnt.Data;
 using EllepolEnt.Models;
+using System.Xml.Linq;
 
 namespace EllepolEnt.Controllers
 {
@@ -34,7 +35,7 @@ namespace EllepolEnt.Controllers
             }
 
             var invoice = await _context.Invoice
-                .FirstOrDefaultAsync(m => m.InvoiceNumber == id);
+                .FirstOrDefaultAsync(m => m.Invoice_Number == id);
             if (invoice == null)
             {
                 return NotFound();
@@ -54,12 +55,41 @@ namespace EllepolEnt.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("InvoiceNumber,Item_Id,ItemName,ItemPrice,DiscountRate,qty")] Invoice invoice)
+        public async Task<IActionResult> Create([Bind("Invoice_Number,Item_Id,Item_Name,Item_Price,qty")] Invoice invoice)
         {
-            if (ModelState.IsValid)
+            var inv = invoice.Invoice_Number.ToString();
+            string? invoicenum = _context.Invoice.OrderByDescending(e => e.Invoice_Number).FirstOrDefault().ToString();
+            var itmId = invoice.Item_Id.ToString();
+            var qtyy = invoice.qty.ToString();
+            var dty = DateTime.UtcNow.Date.ToString();
+            var outprice = invoice.Item_Price.ToString();
+
+            if (inv == invoicenum)
             {
-                _context.Add(invoice);
-                await _context.SaveChangesAsync();
+                ViewBag.Message = string.Format("Invoice Number Already Exsists");
+            }
+            else
+            {
+                if (ModelState.IsValid)
+                {
+                    var stockrecord = _context.Stock.FirstOrDefault(e => e.Itemid == itmId);
+                    if (stockrecord != null && stockrecord.Available_Stock >= int.Parse(qtyy.ToString()))
+                    {
+                        stockrecord.Available_Stock -= Convert.ToInt32(qtyy);
+                        _context.Add(invoice);
+                        var stockoutRecord = new Stock_Out();
+                        stockoutRecord.stockoutDate = Convert.ToDateTime(dty).Date;
+                        stockoutRecord.ItemId = itmId;
+                        stockoutRecord.Stockout = float.Parse(qtyy.ToString());
+                        stockoutRecord.StockoutPrice = float.Parse(outprice.ToString());
+                        _context.Stock_Out.Add(stockoutRecord);
+                        await _context.SaveChangesAsync();
+                    }
+                    else
+                    {
+                        ViewBag.Message = string.Format("Invoice Number Already Exsists");
+                    }
+                }
                 return RedirectToAction(nameof(Index));
             }
             return View(invoice);
@@ -86,9 +116,9 @@ namespace EllepolEnt.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("InvoiceNumber,Item_Id,ItemName,ItemPrice,DiscountRate,qty")] Invoice invoice)
+        public async Task<IActionResult> Edit(string id, [Bind("Invoice_Number,Item_Id,ItemName,ItemPrice,qty")] Invoice invoice)
         {
-            if (id != invoice.InvoiceNumber)
+            if (id != invoice.Invoice_Number)
             {
                 return NotFound();
             }
@@ -102,7 +132,7 @@ namespace EllepolEnt.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!InvoiceExists(invoice.InvoiceNumber))
+                    if (!InvoiceExists(invoice.Invoice_Number))
                     {
                         return NotFound();
                     }
@@ -125,7 +155,7 @@ namespace EllepolEnt.Controllers
             }
 
             var invoice = await _context.Invoice
-                .FirstOrDefaultAsync(m => m.InvoiceNumber == id);
+                .FirstOrDefaultAsync(m => m.Invoice_Number == id);
             if (invoice == null)
             {
                 return NotFound();
@@ -155,7 +185,7 @@ namespace EllepolEnt.Controllers
 
         private bool InvoiceExists(string id)
         {
-          return _context.Invoice.Any(e => e.InvoiceNumber == id);
+          return _context.Invoice.Any(e => e.Invoice_Number == id);
         }
     }
 }

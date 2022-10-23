@@ -46,7 +46,24 @@ namespace EllepolEnt.Controllers
         // GET: Pumpregistration/Create
         public IActionResult Create()
         {
-            return View();
+            var loginsession = HttpContext.Session.GetString("Uname");
+            var rolesession = HttpContext.Session.GetString("Role");
+            if (loginsession != null && loginsession != "")
+            {
+                if (rolesession != null && rolesession != "" && (rolesession == "Admin"))
+                {
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("AccessDinied", "Home");
+                }
+            }
+            else
+            {
+                return RedirectToAction("LoginUser", "Login");
+            }
+
         }
 
         // POST: Pumpregistration/Create
