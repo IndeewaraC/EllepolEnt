@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using EllepolEnt.Data;
 using EllepolEnt.Models;
 using System.Xml.Linq;
+using Microsoft.CodeAnalysis;
 
 namespace EllepolEnt.Controllers
 {
@@ -47,7 +48,28 @@ namespace EllepolEnt.Controllers
         // GET: Invoice/Create
         public IActionResult Create()
         {
-            return View();
+            var loginsession = HttpContext.Session.GetString("Uname");
+            var rolesession = HttpContext.Session.GetString("Role");
+            if (loginsession != null && loginsession != "")
+            {
+                if (rolesession != null && rolesession != "" && (rolesession == "Admin"))
+                {
+                    List<SelectListItem> itemList = new();
+                    List<ItemReg> ItemID = _context.ItemReg.ToList();
+                    ItemID.ForEach(x => itemList.Add(new() { Value = x.itemid.ToString(), Text = x.itemid.ToString() }));
+                    ViewBag.listofitems = itemList;
+
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("AccessDinied", "Home");
+                }
+            }
+            else
+            {
+                return RedirectToAction("LoginUser", "Login");
+            }
         }
 
         // POST: Invoice/Create
