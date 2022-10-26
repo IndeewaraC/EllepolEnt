@@ -209,5 +209,14 @@ namespace EllepolEnt.Controllers
         {
           return _context.Invoice.Any(e => e.Invoice_Number == id);
         }
+
+        private void PopulateDepartmentsDropDownList(object Item_ID)
+        {
+            var itemqry = from d in _context.ItemReg
+                                   orderby d.itemid
+                                   select d;
+            ViewBag.Itemname = new SelectList(itemqry.AsNoTracking(), "Item_Name", "Item_Price", Item_ID);
+        }
+
     }
 }

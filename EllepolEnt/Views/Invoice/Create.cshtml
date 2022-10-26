@@ -19,11 +19,11 @@
             </div>
             <div class="form-group">
                 <label asp-for="Item_Id" class="control-label"> Item Id</label>
-                <select onchange="Test()" name="Item_Id" class="form-control" asp-items="@ViewBag.listofitems"></select>
+                <select onchange="Test(Item_Id)" name="Item_Id" class="form-control" asp-items="@ViewBag.listofitems"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Item_Name" class="control-label"></label>
-                <label name="Item_Name" class="form-control" asp-items="@ViewBag.listofitems"></label>
+                <label name="Item_Name" class="form-control" asp-items="@ViewBag.Itemname"></label>
             </div>
             <div class="form-group">
                 <label asp-for="Item_Price" class="control-label"></label>
@@ -49,7 +49,7 @@
 <script type="text/javascript">
     function Test()
     {
-        alert("HII");
+    @Html.BeginForm("PopulateDepartmentsDropDownList");
     }
 </script>
 
