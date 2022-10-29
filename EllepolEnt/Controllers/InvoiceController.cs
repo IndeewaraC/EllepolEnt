@@ -55,9 +55,15 @@ namespace EllepolEnt.Controllers
                 if (rolesession != null && rolesession != "" && (rolesession == "Admin"))
                 {
                     List<SelectListItem> itemList = new();
-                    List<ItemReg> ItemID = _context.ItemReg.ToList();
-                    ItemID.ForEach(x => itemList.Add(new() { Value = x.itemid.ToString(), Text = x.itemid.ToString() }));
+                    List<ItemReg> itemIDs = _context.ItemReg.OrderBy(e=> e.itemid).ToList();
+                    itemIDs.ForEach(x => itemList.Add(new() { Value = x.itemid.ToString(), Text = x.itemid.ToString() }));
                     ViewBag.listofitems = itemList;
+                    if (itemIDs.Any())
+                    {
+                        ViewBag.itemname = itemIDs.FirstOrDefault().itemname;
+                        ViewBag.price = itemIDs.FirstOrDefault().Saleprice;
+
+                    }
 
                     return View();
                 }
@@ -79,19 +85,19 @@ namespace EllepolEnt.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Invoice_Number,Item_Id,Item_Name,Item_Price,qty")] Invoice invoice)
         {
-            var inv = invoice.Invoice_Number.ToString();
-            string? invoicenum = _context.Invoice.OrderByDescending(e => e.Invoice_Number).FirstOrDefault().ToString();
-            var itmId = invoice.Item_Id.ToString();
-            var qtyy = invoice.qty.ToString();
-            var dty = DateTime.UtcNow.Date.ToString();
-            var outprice = invoice.Item_Price.ToString();
-
-            if (inv == invoicenum)
+            var inv = GetInvNum();
+            var isExeInvoice = _context.Invoice.Any(e => e.Invoice_Number == inv);
+            if (isExeInvoice)
             {
                 ViewBag.Message = string.Format("Invoice Number Already Exsists");
             }
             else
             {
+                var itmId = invoice.Item_Id.ToString();
+                var qtyy = invoice.qty.ToString();
+                var dty = DateTime.UtcNow.Date.ToString();
+                var outprice = invoice.Item_Price.ToString();
+                invoice.Invoice_Number = inv;
                 if (ModelState.IsValid)
                 {
                     var stockrecord = _context.Stock.FirstOrDefault(e => e.Itemid == itmId);
@@ -210,12 +216,47 @@ namespace EllepolEnt.Controllers
           return _context.Invoice.Any(e => e.Invoice_Number == id);
         }
 
-        private void PopulateDepartmentsDropDownList(object Item_ID)
+        [HttpGet]
+        public JsonResult PopulateDropDownList(String itemId)
         {
+            var itemname = "";
+            var itemprice = 0.0000000;
             var itemqry = from d in _context.ItemReg
-                                   orderby d.itemid
-                                   select d;
-            ViewBag.Itemname = new SelectList(itemqry.AsNoTracking(), "Item_Name", "Item_Price", Item_ID);
+                          where d.itemid == itemId
+                          select d;
+            if (itemqry.Any())
+            {
+                 itemname = itemqry.FirstOrDefault().itemname;
+                 itemprice = itemqry.FirstOrDefault().Saleprice;
+            }
+            return Json(new { name = itemname, price = itemprice });
+
+        }
+
+        public string GetInvNum()
+        {
+            var datePrefix = DateTime.Now.ToString("ddMMyy");
+            var invoicePrefix = "I" + datePrefix;
+            var invoicesForDate = _context.Invoice.Where(e => e.Invoice_Number.Contains(invoicePrefix)).OrderByDescending(e=> e.Invoice_Number);
+            if (invoicesForDate.Any())
+            {
+                var lastInvoiceNum = invoicesForDate.FirstOrDefault().Invoice_Number;
+                var invCount = int.Parse(lastInvoiceNum.Substring(invoicePrefix.Length,lastInvoiceNum.Length-invoicePrefix.Length));
+                var nxtInvNum = invCount + 1;
+                var invoicePostFix = nxtInvNum.ToString();
+                if (nxtInvNum < 10)
+                {
+                    invoicePostFix = "00" + nxtInvNum;
+                }else if(nxtInvNum < 100) 
+                {
+                    invoicePostFix = "0" + nxtInvNum;
+                }
+                return invoicePrefix + invoicePostFix;
+            }
+            else
+            {
+                return invoicePrefix + "001";
+            }
         }
 
     }

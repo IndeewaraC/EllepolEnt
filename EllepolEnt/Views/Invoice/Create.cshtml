@@ -12,23 +12,22 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+            <div class="form-group d-none">
                 <label asp-for="Invoice_Number" class="control-label"></label>
-                <input asp-for="Invoice_Number" class="form-control" />
+                <input asp-for="Invoice_Number" class="form-control" value="0"/>
                 <span asp-validation-for="Invoice_Number" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group" name="IDFrom">
                 <label asp-for="Item_Id" class="control-label"> Item Id</label>
-                <select onchange="Test(Item_Id)" name="Item_Id" class="form-control" asp-items="@ViewBag.listofitems"></select>
+                <select onchange="iditem(this)" name="Item_Id" class="form-control" asp-items="@ViewBag.listofitems"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Item_Name" class="control-label"></label>
-                <label name="Item_Name" class="form-control" asp-items="@ViewBag.Itemname"></label>
+                <input readonly asp-for="Item_Name" class="form-control" value="@ViewBag.itemname" />
             </div>
             <div class="form-group">
                 <label asp-for="Item_Price" class="control-label"></label>
-                <input asp-for="Item_Price" class="form-control" />
-                <span asp-validation-for="Item_Price" class="text-danger"></span>
+                <input readonly asp-for="Item_Price" class="form-control" value="@ViewBag.price" />
             </div>
             <div class="form-group">
                 <label asp-for="qty" class="control-label"></label>
@@ -47,9 +46,14 @@
 </div>
 
 <script type="text/javascript">
-    function Test()
-    {
-    @Html.BeginForm("PopulateDepartmentsDropDownList");
+    function iditem(selectedobj) {
+        
+        var x = selectedobj.value;
+        var url = "/Invoice/PopulateDropDownList?itemId=" + x;
+        $.get(url,null,function(data){
+            document.getElementById("Item_Name").value = data.name;
+            document.getElementById("Item_Price").value = data.price;
+        });
     }
 </script>
 
