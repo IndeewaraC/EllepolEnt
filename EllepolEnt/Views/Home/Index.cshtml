@@ -1,9 +1,40 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var imagepath = "~/Images/Logo.jpg";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <img src="C:\Users\Indewara Gunathilaka\Source\Repos\IndeewaraC\EllepolEnt\EllepolEnt\Images\Logo.jpg" alt="Smiley face" width="42" height="42" />
+    <img src="@imagepath" alt="Main Logo" width="242" height="242" />
+
+    <ul class="navbar-nav flex-grow-1">
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="GRN" asp-action="Create">Add New GRN</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Invoice" asp-action="Create">Create Invoice</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="PumpManagement" asp-action="Create">Liqud Sale</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="GRN" asp-action="Index">GRN Details</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="ItemReg" asp-action="Create">Add New Item</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Pumpregistration" asp-action="Create">Register New Pump</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="UserDetails" asp-action="Create">Register New User</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Create">Create Login Details</a>
+        </li>
+    </ul>
 </div>
