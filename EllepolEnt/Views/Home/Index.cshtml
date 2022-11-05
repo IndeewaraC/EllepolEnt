@@ -1,40 +1,39 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var imagepath = "~/Images/Logo.jpg";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <img src="@imagepath" alt="Main Logo" width="242" height="242" />
+    <img src="C:\Users\Indewara Gunathilaka\Source\Repos\IndeewaraC\EllepolEnt\EllepolEnt\Images\Logo.jpg" />
 
     <ul class="navbar-nav flex-grow-1">
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="GRN" asp-action="Create">Add New GRN</a>
+            <a class="nav-link text-dark" asp-area="" asp-controller="GRN" asp-action="Create">GRN</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Invoice" asp-action="Create">Create Invoice</a>
+            <a class="nav-link text-dark" asp-area="" asp-controller="Invoice" asp-action="Create">INVOICE</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="PumpManagement" asp-action="Create">Liqud Sale</a>
+            <a class="nav-link text-dark" asp-area="" asp-controller="PumpManagement" asp-action="Create">LIQUID SALE</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="GRN" asp-action="Index">GRN Details</a>
+            <a class="nav-link text-dark" asp-area="" asp-controller="GRN" asp-action="Index">GRN DETAILS</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="ItemReg" asp-action="Create">Add New Item</a>
+            <a class="nav-link text-dark" asp-area="" asp-controller="ItemReg" asp-action="Create">ITEM</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Pumpregistration" asp-action="Create">Register New Pump</a>
+            <a class="nav-link text-dark" asp-area="" asp-controller="Pumpregistration" asp-action="Create">PUMP MANAGEMENT</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="UserDetails" asp-action="Create">Register New User</a>
+            <a class="nav-link text-dark" asp-area="" asp-controller="UserDetails" asp-action="Create">USER</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Create">Create Login Details</a>
+            <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Create">LOGIN</a>
         </li>
     </ul>
 </div>
