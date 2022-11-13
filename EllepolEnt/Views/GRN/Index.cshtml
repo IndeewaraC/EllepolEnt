@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<EllepolEnt.Models.GRN>
 
 @{
-    ViewData["Title"] = "List Od Added GRN";
+    ViewData["Title"] = "List Of Added GRN";
     Layout = "~/Views/Shared/_Layout_03.cshtml";
 }
 
@@ -15,6 +15,9 @@
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.GRN_Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GRN_ID)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Item_ID)
