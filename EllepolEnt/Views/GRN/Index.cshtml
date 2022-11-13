@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout_03.cshtml";
 }
 
-<h1>List Od Added GRN</h1>
+<h1>List Of Added GRN</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -37,9 +37,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.GRN_Date)
             </td>
-                <th>
-                    @Html.DisplayNameFor(model => model.GRN_ID)
-                </th>
+            <td>
+                @Html.DisplayNameFor(model => model.GRN_ID)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Item_ID)
             </td>
