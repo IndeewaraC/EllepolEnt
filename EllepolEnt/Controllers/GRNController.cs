@@ -206,5 +206,12 @@ namespace EllepolEnt.Controllers
         {
           return _context.GRN.Any(e => e.GRN_ID == id);
         }
+
+        public async Task<IActionResult> IndexHome()
+        {
+            
+                return RedirectToAction("Index", "Home");
+
+        }
     }
 }

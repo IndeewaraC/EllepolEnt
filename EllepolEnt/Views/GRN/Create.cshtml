@@ -5,9 +5,7 @@
     Layout = "~/Views/Shared/_Layout_03.cshtml";
 }
 
-<h1>Create</h1>
-
-<h4>GRN</h4>
+<h1>Create GRN</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -40,12 +38,10 @@
             <Br>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" asp-action="IndexHome" name="back" class="btn btn-primary" value="Back"/>
+                <input type="submit" asp-action="Index" name="Back to List" class="btn btn-primary" value="Back to List" />
             </div>
         </form>
     </div>
-</div>
-<br>
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
