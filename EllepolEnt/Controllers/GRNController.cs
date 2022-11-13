@@ -63,6 +63,10 @@ namespace EllepolEnt.Controllers
         // GET: GRN/Create
         public IActionResult Create()
         {
+            List<SelectListItem> ItemIdList = new();
+            List<ItemReg> ItemId = _context.ItemReg.ToList();
+            ItemId.ForEach(x => ItemIdList.Add(new() { Value = x.itemid.ToString(), Text = x.itemname.ToString() }));
+            ViewBag.listofItemId = ItemIdList;
             return View();
         }
 
@@ -73,6 +77,8 @@ namespace EllepolEnt.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("GRN_ID,GRN_Date,Item_ID,In_Price,Stock_In_Amount")] GRN gRN)
         {
+         
+
             var GRN_ID = gRN.GRN_ID;
             DateTime GRN_Date = gRN.GRN_Date;
             var itemid = gRN.Item_ID;

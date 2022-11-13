@@ -24,9 +24,8 @@
                 <span asp-validation-for="GRN_Date" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Item_ID" class="control-label"></label>
-                <input asp-for="Item_ID" class="form-control" />
-                <span asp-validation-for="Item_ID" class="text-danger"></span>
+                <label asp-for="Item_ID" class="control-label">Item Id</label>
+                <select name="Item_ID" class="form-control" asp-items="@ViewBag.listofItemId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="In_Price" class="control-label"></label>
@@ -38,6 +37,7 @@
                 <input asp-for="Stock_In_Amount" class="form-control" />
                 <span asp-validation-for="Stock_In_Amount" class="text-danger"></span>
             </div>
+            <Br>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
